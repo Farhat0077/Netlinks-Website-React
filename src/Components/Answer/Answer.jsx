@@ -1,42 +1,50 @@
-import React, { useState } from 'react'
-import answers from './AnswerData'
-import './Answer.css'
-export default function Answer() {
-const [openIndex,setIndex]=useState(0);
-  
+import "./Answer.css";
+import answers from "./AnswerData";
+import { useState } from "react";
+
+function Answer() {
+  const [activeIndex, setActiveIndex] = useState(null);
+
+  function handleClick(index) {
+    if (activeIndex === index) {
+      setActiveIndex(null);
+    } else {
+      setActiveIndex(index);
+    }
+  }
+
   return (
-    <div className='faq-section'>
-       <p class="small-title">, QUESTIONS</p>
+    <div className="faq-wrapper">
+      <p className="faq-label">,QUESTIONS</p>
+      <h1 className="faq-title">Answers to what CIOs actually ask.</h1>
 
-        <h1>Answers to what CIOs actually ask.</h1>
+      <div className="faq-list">
+        {answers.map((question, index) => {
+          const isOpen = activeIndex === index;
+          return (
+            <div key={index} className="faq-item">
+              <button
+                className={`collapsible ${isOpen ? "active" : ""}`}
+                onClick={() => handleClick(index)}
+              >
+                <span className="question-text">{question.question}</span>
 
-       <div className="faq-container">
+                <span className={`icon-circle ${isOpen ? "open" : ""}`}>
+                  {isOpen ? question.iconNeg : question.PlusIcon}
+                </span>
+              </button>
 
-
-        {answers.map((data)=>{
-          return(
-           <section>
-
-             <div className="faq-item" >
-
-              <h2>{data.question}</h2>
-              {/* <button>{data.PlusIcon}</button> */}
+              {isOpen && (
+                <div className="content">
+                  <p>{question.answer}</p>
+                </div>
+              )}
             </div>
-
-
-            <div className='faq-answer'>
-              <p>{data.answer}</p>
-            </div>
-           </section>
-            
-
-
-
-          )
+          );
         })}
-</div>
-        
-      
+      </div>
     </div>
-  )
+  );
 }
+
+export default Answer;

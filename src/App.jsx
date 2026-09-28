@@ -23,9 +23,9 @@ export default function App() {
       <Custom />
       <Industry />
       <Founder />
-      <Answer />
+     <Answer />
       <Talk />
-      <Footer />
+       <Footer />
     </>
   );
 }
